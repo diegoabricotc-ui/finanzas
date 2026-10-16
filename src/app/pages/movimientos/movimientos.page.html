@@ -1,0 +1,31 @@
+<ion-content>
+  <div class="pagina">
+    <div class="etiqueta-seccion cabeza">{{ nombre }}</div>
+    <h1 class="titulo">Movimientos</h1>
+    <p class="total">
+      Llevas gastado <span class="num">{{ clp(total()) }}</span> este mes
+    </p>
+
+    @for (d of dias(); track d.titulo) {
+      <div class="dia">
+        <div class="etiqueta-seccion fila">
+          <span>{{ d.titulo }}</span>
+          <span class="num">{{ clp(d.total) }}</span>
+        </div>
+        <div class="tarjeta lista">
+          @for (m of d.items; track m.id) {
+            <div class="item">
+              <div class="texto">
+                <div>Gastaste <strong class="num">{{ clp(m.monto) }}</strong> en {{ m.nombre }}</div>
+                <div class="nota">{{ nombrePresupuesto(m.presupuestoId) }}</div>
+              </div>
+              <button type="button" class="borrar" [attr.aria-label]="'Borrar ' + m.nombre" (click)="borrar(m)">Borrar</button>
+            </div>
+          }
+        </div>
+      </div>
+    } @empty {
+      <p class="vacio">Todavía no hay gastos este mes.</p>
+    }
+  </div>
+</ion-content>

@@ -1,0 +1,148 @@
+<ion-content>
+  <div class="pagina">
+    @if (mes() === undefined) {
+      <p class="vacio">Cargando...</p>
+    } @else if (mes() === null) {
+      <!-- Todavía no armas el mes -->
+      <div class="sin-mes">
+        <div class="etiqueta-seccion">{{ nombre }}</div>
+        <h1 class="titulo">Todavía no armas {{ nombre }}</h1>
+        <p>Pon tu sueldo y reparte cada peso en presupuestos. Después vas anotando los gastos y se descuentan solos.</p>
+        <a class="boton-principal enlace-boton" routerLink="/armar">Armar {{ nombre }}</a>
+      </div>
+    } @else {
+      <header class="cabecera">
+        <div class="arriba">
+          <div class="etiqueta-seccion">{{ nombre }} · día {{ hoy.getDate() }} de {{ ultimoDia }}</div>
+          <a class="editar" routerLink="/armar">Editar mes</a>
+        </div>
+        <div class="sub">Te quedan para gastar</div>
+        <div class="grande" [class.negativo]="disponible() < 0">{{ clp(disponible()) }}</div>
+        <div class="sub chico">
+          Unos <span class="num">{{ clp(porDia()) }}</span> por día hasta fin de mes
+        </div>
+      </header>
+
+      <div class="lista">
+        @for (e of paraGastar(); track e.id) {
+          <div class="tarjeta presupuesto" [class.pasado]="e.pasado">
+            <div class="info">
+              <div class="fila">
+                <span class="nombre">{{ e.nombre }}</span>
+                <span class="num monto">{{ clp(e.queda) }}</span>
+              </div>
+              <div class="barra" [class.roja]="e.pasado"><div [style.width.%]="e.porcentajeUsado"></div></div>
+              <div class="nota">
+                @if (e.pasado) {
+                  Te pasaste del presupuesto de {{ clp(e.monto) }}
+                } @else {
+                  quedan de {{ clp(e.monto) }}
+                }
+              </div>
+            </div>
+            <button type="button" class="mas" [attr.aria-label]="'Agregar gasto a ' + e.nombre" (click)="abrirGasto(e)">+</button>
+          </div>
+        }
+      </div>
+
+      @if (ahorros().length) {
+        <div class="etiqueta-seccion">Ahorros de este mes</div>
+        <div class="lista">
+          @for (a of ahorros(); track a.id) {
+            <div class="tarjeta ahorro">
+              <div>
+                <div class="nombre">{{ a.nombre }}</div>
+                <div class="nota">
+                  @if (a.gastado > 0) {
+                    Usaste {{ clp(a.gastado) }} este mes
+                  } @else {
+                    Sin tocar
+                  }
+                </div>
+              </div>
+              <div class="der">
+                <span class="num">{{ clp(a.monto) }}</span>
+                <button type="button" class="usar" (click)="abrirGasto(a)">Usar</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="etiqueta-seccion">Último movimiento</div>
+      @if (ultimo(); as u) {
+        <div class="ultimo">
+          <div>
+            <div>{{ u.nombre }}</div>
+            <div class="nota">{{ cuando(u.fecha) }} · {{ nombrePresupuesto(u.presupuestoId) }}</div>
+          </div>
+          <span class="num">−{{ clp(u.monto) }}</span>
+        </div>
+      } @else {
+        <p class="nota">Aún no anotas gastos este mes. Toca un <strong>+</strong> para empezar.</p>
+      }
+    }
+  </div>
+
+  <!-- Modal para registrar un gasto -->
+  <ion-modal [isOpen]="modalAbierto()" (didDismiss)="modalAbierto.set(false)">
+    <ng-template>
+      <ion-content>
+        <div class="pagina modal">
+          <div class="modal-arriba">
+            <button type="button" class="enlace" (click)="modalAbierto.set(false)">Cancelar</button>
+            <strong>Nuevo gasto</strong>
+            <span class="relleno"></span>
+          </div>
+
+          <label class="monto-grande">
+            <span>¿Cuánto gastaste?</span>
+            <input
+              class="campo"
+              inputmode="numeric"
+              placeholder="$0"
+              [ngModel]="mostrar(monto)"
+              (ngModelChange)="monto = leer($event)"
+            />
+          </label>
+
+          <label class="tarjeta campo-texto">
+            <span>¿En qué?</span>
+            <input class="campo" placeholder="Ej. Coca-Cola" [(ngModel)]="detalle" />
+          </label>
+
+          <div class="etiqueta-seccion">Descontar de</div>
+          <div class="chips">
+            @for (e of estados(); track e.id) {
+              <button type="button" class="chip" [class.activo]="presupuestoId === e.id" [attr.aria-pressed]="presupuestoId === e.id" (click)="presupuestoId = e.id">
+                {{ e.nombre }}
+              </button>
+            }
+          </div>
+
+          <label class="tarjeta campo-texto">
+            <span>Fecha</span>
+            <input class="campo" type="date" [min]="minFecha" [max]="maxFecha" [(ngModel)]="fecha" />
+          </label>
+
+          @if (seleccionado; as s) {
+            <div class="despues">
+              <span>Después de este gasto</span>
+              <div class="num">
+                <s>{{ clp(s.queda) }}</s>
+                <strong [class.negativo]="s.queda - monto < 0">{{ clp(s.queda - monto) }}</strong>
+                <span class="en">en {{ s.nombre }}</span>
+              </div>
+            </div>
+          }
+
+          @if (errorGasto()) {
+            <p class="error" role="alert">{{ errorGasto() }}</p>
+          }
+
+          <button type="button" class="boton-principal" (click)="guardarGasto()">Guardar gasto</button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

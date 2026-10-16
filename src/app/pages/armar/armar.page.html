@@ -1,0 +1,122 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/mes" text="Volver"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="pagina">
+    <div class="etiqueta-seccion mes">{{ nombre }}</div>
+    <h1 class="titulo">{{ existente ? 'Edita tu mes' : 'Arma tu mes' }}</h1>
+
+    @if (cargando()) {
+      <p class="vacio">Cargando...</p>
+    } @else {
+      <label class="tarjeta sueldo">
+        <span>Sueldo líquido</span>
+        <input
+          class="campo num"
+          inputmode="numeric"
+          placeholder="$0"
+          [ngModel]="mostrar(sueldo)"
+          (ngModelChange)="sueldo = leer($event)"
+        />
+      </label>
+
+      @if (arrastre > 0) {
+        <div class="tarjeta arrastre">
+          <span>Sobrante del mes anterior</span>
+          <span class="num">+{{ clp(arrastre) }}</span>
+        </div>
+      }
+
+      <div class="emergencia">
+        <div>
+          <div class="nombre">Fondo de emergencia</div>
+          <div class="detalle">
+            Sugerido 10% · <span class="num">{{ clp(montoEmergencia) }}</span>
+          </div>
+        </div>
+        <div class="stepper">
+          <button type="button" aria-label="Bajar porcentaje" (click)="cambiarPorcentaje(-1)">−</button>
+          <span class="num">{{ porcentaje }}%</span>
+          <button type="button" aria-label="Subir porcentaje" (click)="cambiarPorcentaje(1)">+</button>
+        </div>
+      </div>
+
+      <div class="etiqueta-seccion">Presupuestos</div>
+
+      <div class="lista">
+        @for (p of presupuestos; track p.id) {
+          @if (editando === p.id) {
+            <div class="tarjeta editor">
+              <input class="campo nombre-input" placeholder="Nombre (ej. Comida)" [(ngModel)]="p.nombre" />
+              <div class="fila">
+                <select class="selector" [(ngModel)]="p.etiqueta" aria-label="Etiqueta">
+                  @for (e of etiquetas; track e) {
+                    <option [value]="e">{{ e }}</option>
+                  }
+                </select>
+                <input
+                  class="campo num monto-input"
+                  inputmode="numeric"
+                  placeholder="$0"
+                  aria-label="Monto"
+                  [ngModel]="mostrar(p.monto)"
+                  (ngModelChange)="p.monto = leer($event)"
+                />
+              </div>
+              <div class="fila acciones">
+                <button type="button" class="enlace peligro" (click)="quitar(p.id)">
+                  <ion-icon name="trash-outline" aria-hidden="true"></ion-icon> Quitar
+                </button>
+                @if (restante !== 0) {
+                  <button type="button" class="enlace" (click)="completarCon(p)">Poner lo que falta</button>
+                }
+                <button type="button" class="enlace fuerte" (click)="editando = null">Listo</button>
+              </div>
+            </div>
+          } @else {
+            <button type="button" class="tarjeta fila-presupuesto" (click)="editando = p.id">
+              <span class="izq">
+                <span>{{ p.nombre || 'Sin nombre' }}</span>
+                <span class="pill" [attr.data-etiqueta]="p.etiqueta">{{ p.etiqueta }}</span>
+              </span>
+              <span class="num">{{ clp(p.monto) }}</span>
+            </button>
+          }
+        }
+        <button type="button" class="agregar" (click)="agregar()">+ Agregar presupuesto</button>
+      </div>
+
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+    }
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="pie">
+    <div class="resumen">
+      <div>
+        <div class="gris">Por asignar</div>
+        <div class="estado" [class.malo]="restante !== 0">
+          @if (restante === 0) {
+            Todo el sueldo tiene destino
+          } @else if (restante > 0) {
+            Te falta repartir esta plata
+          } @else {
+            Asignaste más de lo que tienes
+          }
+        </div>
+      </div>
+      <div class="num total" [class.malo]="restante !== 0">{{ clp(restante) }}</div>
+    </div>
+    <button class="guardar" type="button" [disabled]="restante !== 0 || guardando() || cargando()" (click)="guardar()">
+      Guardar mes
+    </button>
+  </div>
+</ion-footer>

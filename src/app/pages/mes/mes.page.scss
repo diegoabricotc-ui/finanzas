@@ -1,0 +1,265 @@
+.sin-mes {
+  padding-top: 12vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  p {
+    color: var(--f-suave);
+    margin: 0 0 8px;
+  }
+}
+
+.enlace-boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.cabecera {
+  padding: 12px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  .arriba {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .etiqueta-seccion {
+      margin: 0;
+    }
+  }
+  .editar {
+    color: var(--f-verde);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .sub {
+    font-size: 15px;
+    color: var(--f-suave);
+    &.chico {
+      font-size: 13px;
+    }
+  }
+  .grande {
+    font-family: var(--f-display);
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.05;
+    &.negativo {
+      color: var(--f-rojo);
+    }
+  }
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.presupuesto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 12px;
+  .info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .fila {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .nombre {
+    font-weight: 600;
+  }
+  .monto {
+    font-weight: 600;
+  }
+  &.pasado {
+    background: var(--f-rojo-suave);
+    .monto,
+    .nota {
+      color: var(--f-rojo-texto);
+    }
+  }
+}
+
+.nota {
+  font-size: 12px;
+  color: var(--f-suave);
+}
+
+.mas {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 0;
+  background: var(--f-tinta);
+  color: var(--f-fondo);
+  font-size: 22px;
+}
+
+.ahorro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: var(--f-verde-suave);
+  .nombre {
+    font-weight: 600;
+  }
+  .nota {
+    color: var(--f-verde-texto);
+  }
+  .der {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+}
+
+.usar {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--f-verde);
+  background: transparent;
+  color: var(--f-verde);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ultimo {
+  border: 1px solid var(--f-linea);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  .num {
+    font-weight: 600;
+  }
+}
+
+// ---------- Modal ----------
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
+}
+
+.modal-arriba {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .relleno {
+    width: 64px;
+  }
+}
+
+.enlace {
+  border: 0;
+  background: transparent;
+  color: var(--f-verde);
+  font: inherit;
+  min-height: 44px;
+  padding: 0;
+}
+
+.monto-grande {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 0 8px;
+  span {
+    font-size: 13px;
+    color: var(--f-suave);
+  }
+  input {
+    text-align: center;
+    font-family: var(--f-display);
+    font-size: 52px;
+    font-weight: 700;
+  }
+}
+
+.campo-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  span {
+    font-size: 12px;
+    color: var(--f-suave);
+    font-weight: 500;
+  }
+  input {
+    font-size: 17px;
+    min-height: 28px;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: -4px;
+}
+
+.despues {
+  background: var(--f-verde-suave);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  > span {
+    font-size: 13px;
+    color: var(--f-verde-texto);
+  }
+  .num {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    s {
+      color: var(--f-suave);
+    }
+    strong {
+      font-size: 22px;
+      color: var(--f-verde-texto);
+      &.negativo {
+        color: var(--f-rojo);
+      }
+    }
+    .en {
+      font-family: var(--f-texto);
+      font-size: 13px;
+      color: var(--f-verde-texto);
+    }
+  }
+}
+
+.error {
+  margin: 0;
+  color: var(--f-rojo-texto);
+  background: var(--f-rojo-suave);
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+}

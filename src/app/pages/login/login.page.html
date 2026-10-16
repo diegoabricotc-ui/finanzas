@@ -1,0 +1,31 @@
+<ion-content>
+  <div class="pagina login">
+    <div class="marca">
+      <div class="logo" aria-hidden="true">$</div>
+      <h1 class="titulo">Finanzas</h1>
+      <p>Cada peso con destino, antes de gastarlo.</p>
+    </div>
+
+    <form (ngSubmit)="enviar('entrar')" class="formulario">
+      <label class="tarjeta">
+        <span>Correo</span>
+        <input class="campo" type="email" name="correo" autocomplete="email" [(ngModel)]="correo" />
+      </label>
+      <label class="tarjeta">
+        <span>Contraseña</span>
+        <input class="campo" type="password" name="clave" autocomplete="current-password" [(ngModel)]="clave" />
+      </label>
+
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+
+      <button class="boton-principal" type="submit" [disabled]="cargando()">
+        {{ cargando() ? 'Entrando...' : 'Entrar' }}
+      </button>
+      <button class="secundario" type="button" (click)="enviar('crear')" [disabled]="cargando()">
+        Primera vez: crear cuenta
+      </button>
+    </form>
+  </div>
+</ion-content>

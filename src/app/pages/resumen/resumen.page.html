@@ -1,0 +1,120 @@
+<ion-content>
+  <div class="pagina">
+    <div class="arriba">
+      <div class="etiqueta-seccion cabeza">{{ mes()?.cerrado ? 'Cerrado' : 'Resumen' }}</div>
+      @if (meses().length > 1) {
+        <select class="selector" aria-label="Elegir mes" [ngModel]="llave()" (ngModelChange)="elegirMes($event)">
+          @for (m of meses(); track m.id) {
+            <option [value]="m.id">{{ nombreMes(m.id) }}</option>
+          }
+        </select>
+      }
+    </div>
+    <h1 class="titulo">Así te va en {{ nombreMes(llave(), false) }}</h1>
+
+    @if (!mes()) {
+      <p class="vacio">Este mes todavía no está armado.</p>
+    } @else {
+      <!-- Lo que debería sobrar vs lo que realmente tienes -->
+      <section class="oscura">
+        <div class="fila">
+          <span class="gris">Deberías tener libre</span>
+          <span class="num grande">{{ clp(deberiaSobrar()) }}</span>
+        </div>
+        <label class="real">
+          <span>¿Cuánto tienes realmente?</span>
+          <input
+            class="campo num"
+            inputmode="numeric"
+            placeholder="$0"
+            [ngModel]="mostrar(saldoReal)"
+            (ngModelChange)="leerSaldo($event)"
+          />
+        </label>
+        @if (diferencia !== null) {
+          @if (diferencia < 0) {
+            <p class="aviso malo">
+              Faltan <span class="num">{{ clp(-diferencia) }}</span> que no anotaste. Revisa tu cartola.
+            </p>
+          } @else if (diferencia > 0) {
+            <p class="aviso">Tienes <span class="num">{{ clp(diferencia) }}</span> más de lo esperado.</p>
+          } @else {
+            <p class="aviso">Cuadra perfecto. Anotaste todo.</p>
+          }
+        }
+      </section>
+
+      <!-- Gráfico presupuesto vs gastado -->
+      <section class="tarjeta grafico">
+        <div class="fila">
+          <strong>Presupuesto vs gastado</strong>
+          <div class="leyenda">
+            <span><i class="presu"></i>Presupuesto</span>
+            <span><i class="gast"></i>Gastado</span>
+          </div>
+        </div>
+
+        @for (e of gastos(); track e.id) {
+          <div class="barras">
+            <div class="fila chica">
+              <span>{{ e.nombre }}</span>
+              <span class="num" [class.rojo]="e.pasado">{{ e.pasado ? clp(e.queda) : 'sobra ' + clp(e.queda) }}</span>
+            </div>
+            <div class="pista"><div class="presu" [style.width.%]="ancho(e.monto)"></div></div>
+            <div class="pista"><div class="gast" [class.rojo]="e.pasado" [style.width.%]="ancho(e.gastado)"></div></div>
+          </div>
+        }
+
+        @if (mejor() || aCuidar()) {
+          <div class="destacados">
+            @if (mejor(); as m) {
+              <div class="bueno"><span>Mejor</span><strong>{{ m.nombre }}</strong></div>
+            }
+            @if (aCuidar(); as c) {
+              <div class="malo"><span>A cuidar</span><strong>{{ c.nombre }}</strong></div>
+            }
+          </div>
+        }
+      </section>
+
+      <!-- Fondo de emergencia acumulado -->
+      <section class="tarjeta fondo">
+        <div class="fila">
+          <strong>Fondo de emergencia</strong>
+          <span class="num grande-2">{{ clp(saldoFondo()) }}</span>
+        </div>
+        <div class="barra"><div [style.width.%]="avanceFondo()"></div></div>
+        <div class="fila nota">
+          <span>Deberías tener esto guardado aparte</span>
+          <span>Meta: {{ mesesMeta }} sueldos · {{ clp(metaFondo()) }}</span>
+        </div>
+      </section>
+
+      <!-- Cierre del mes -->
+      @if (!mes()!.cerrado) {
+        <section class="cierre">
+          <strong>¿Qué hacemos con los {{ clp(deberiaSobrar() > 0 ? deberiaSobrar() : 0) }}?</strong>
+          <div class="chips">
+            <button type="button" class="chip" [class.activo]="destino === 'fondo'" (click)="destino = 'fondo'">Mandar al fondo</button>
+            <button type="button" class="chip" [class.activo]="destino === 'siguiente'" (click)="destino = 'siguiente'">Pasar al próximo mes</button>
+            <button type="button" class="chip" [class.activo]="destino === 'nada'" (click)="destino = 'nada'">Lo decido yo</button>
+          </div>
+          <button type="button" class="boton-principal" [disabled]="guardando()" (click)="cerrar()">
+            Cerrar {{ nombreMes(llave(), false) }}
+          </button>
+        </section>
+      } @else {
+        <section class="cerrado">
+          <p>
+            Mes cerrado.
+            @if (mes()!.destinoSobrante === 'fondo') { Los {{ clp(mes()!.sobrante) }} que sobraron se fueron al fondo. }
+            @if (mes()!.destinoSobrante === 'siguiente') { Los {{ clp(mes()!.sobrante) }} pasan al próximo mes. }
+          </p>
+          <button type="button" class="enlace" (click)="reabrir()">Reabrir mes</button>
+        </section>
+      }
+    }
+
+    <button type="button" class="salir" (click)="salir()">Cerrar sesión</button>
+  </div>
+</ion-content>

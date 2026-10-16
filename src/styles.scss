@@ -1,0 +1,192 @@
+// Estilos globales y paleta de la app.
+// Todos los colores salen de estas variables, así funciona en modo claro y oscuro.
+
+:root {
+  --f-fondo: #edf0ea;
+  --f-tarjeta: #ffffff;
+  --f-tinta: #16201a;
+  --f-suave: #55625a;
+  --f-linea: #d5dcd3;
+  --f-pista: #e4e9e2;
+  --f-verde: #1d6b47;
+  --f-verde-suave: #dcebe1;
+  --f-verde-texto: #2e5240;
+  --f-rojo: #b3401a;
+  --f-rojo-suave: #fbede5;
+  --f-rojo-texto: #8a3414;
+  --f-oscuro: #16201a;
+  --f-oscuro-2: #24302a;
+  --f-menta: #8fd3ae;
+
+  --f-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --f-texto: 'IBM Plex Sans', system-ui, sans-serif;
+  --f-num: 'IBM Plex Mono', ui-monospace, monospace;
+
+  // Variables de Ionic
+  --ion-font-family: var(--f-texto);
+  --ion-background-color: var(--f-fondo);
+  --ion-text-color: var(--f-tinta);
+  --ion-color-primary: #1d6b47;
+  --ion-color-primary-rgb: 29, 107, 71;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-shade: #185e3e;
+  --ion-color-primary-tint: #347a59;
+  --ion-color-danger: #b3401a;
+  --ion-toolbar-background: var(--f-fondo);
+  --ion-tab-bar-background: var(--f-tarjeta);
+  --ion-tab-bar-color: var(--f-suave);
+  --ion-tab-bar-color-selected: var(--f-verde);
+  --ion-item-background: var(--f-tarjeta);
+  --ion-border-color: var(--f-linea);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --f-fondo: #101612;
+    --f-tarjeta: #1a221d;
+    --f-tinta: #e9efe9;
+    --f-suave: #9faea4;
+    --f-linea: #2c3830;
+    --f-pista: #2a352e;
+    --f-verde: #6cc596;
+    --f-verde-suave: #1e3328;
+    --f-verde-texto: #a7dcbf;
+    --f-rojo: #f0875f;
+    --f-rojo-suave: #3a2219;
+    --f-rojo-texto: #f5b298;
+    --f-oscuro: #050806;
+    --f-oscuro-2: #18201b;
+    --ion-color-primary: #6cc596;
+    --ion-color-primary-rgb: 108, 197, 150;
+    --ion-color-primary-contrast: #0b1f14;
+    --ion-color-primary-shade: #5fad84;
+    --ion-color-primary-tint: #7bcba1;
+    --ion-color-danger: #f0875f;
+    color-scheme: dark;
+  }
+}
+
+body {
+  font-family: var(--f-texto);
+  background: var(--f-fondo);
+  color: var(--f-tinta);
+}
+
+// ---------- Piezas reutilizables ----------
+.num {
+  font-family: var(--f-num);
+  font-variant-numeric: tabular-nums;
+}
+
+.etiqueta-seccion {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--f-suave);
+  text-transform: uppercase;
+  margin: 20px 0 8px;
+}
+
+.titulo {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 30px;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.tarjeta {
+  background: var(--f-tarjeta);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.pagina {
+  padding: 8px 20px 32px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.barra {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--f-pista);
+  overflow: hidden;
+  > div {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--f-verde);
+    transition: width 0.3s ease;
+  }
+  &.roja > div {
+    background: var(--f-rojo);
+  }
+}
+
+.chip {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 99px;
+  border: 1px solid var(--f-linea);
+  background: var(--f-tarjeta);
+  color: var(--f-tinta);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  &.activo {
+    background: var(--f-tinta);
+    color: var(--f-fondo);
+    border-color: var(--f-tinta);
+    font-weight: 600;
+  }
+}
+
+.boton-principal {
+  width: 100%;
+  height: 52px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--f-verde);
+  color: #ffffff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  &:disabled {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .boton-principal {
+    color: #0b1f14;
+  }
+}
+
+.campo {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--f-tinta);
+  font: inherit;
+  padding: 0;
+  outline: none;
+}
+
+.vacio {
+  text-align: center;
+  color: var(--f-suave);
+  padding: 32px 12px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--f-verde);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

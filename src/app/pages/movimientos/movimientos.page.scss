@@ -1,0 +1,54 @@
+.cabeza {
+  margin-top: 16px;
+  margin-bottom: 2px;
+}
+
+.total {
+  color: var(--f-suave);
+  margin: 6px 0 0;
+  .num {
+    color: var(--f-tinta);
+  }
+}
+
+.fila {
+  display: flex;
+  justify-content: space-between;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 13px;
+}
+
+.lista {
+  padding: 0 14px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  & + .item {
+    border-top: 1px solid var(--f-linea);
+  }
+  .texto {
+    min-width: 0;
+  }
+}
+
+.nota {
+  font-size: 12px;
+  color: var(--f-suave);
+  margin-top: 2px;
+}
+
+.borrar {
+  border: 0;
+  background: transparent;
+  color: var(--f-rojo);
+  font: inherit;
+  font-size: 13px;
+  min-height: 44px;
+  padding: 0 4px;
+}

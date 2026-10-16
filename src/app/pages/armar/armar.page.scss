@@ -1,0 +1,232 @@
+.mes {
+  margin: 4px 0 2px;
+}
+
+.sueldo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 16px;
+  border-radius: 16px;
+  padding: 14px 16px;
+  span {
+    font-size: 13px;
+    color: var(--f-suave);
+    font-weight: 500;
+  }
+  input {
+    font-size: 32px;
+    font-weight: 600;
+  }
+}
+
+.arrastre {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--f-verde-texto);
+}
+
+.emergencia {
+  margin-top: 10px;
+  background: var(--f-verde-suave);
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  .nombre {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .detalle {
+    font-size: 12px;
+    color: var(--f-verde-texto);
+  }
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  button {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 0;
+    background: var(--f-tarjeta);
+    color: var(--f-verde);
+    font-size: 20px;
+  }
+  span {
+    min-width: 44px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
+  }
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 16px;
+}
+
+.fila-presupuesto {
+  width: 100%;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font: inherit;
+  color: var(--f-tinta);
+  text-align: left;
+  min-height: 48px;
+  .izq {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    font-weight: 500;
+  }
+  .num {
+    font-weight: 500;
+  }
+}
+
+.pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 99px;
+  background: var(--f-pista);
+  color: var(--f-suave);
+  white-space: nowrap;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1.5px solid var(--f-verde);
+  .nombre-input {
+    font-size: 17px;
+    font-weight: 500;
+    min-height: 30px;
+  }
+  .fila {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .selector {
+    flex: 1;
+    min-height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--f-linea);
+    background: var(--f-fondo);
+    color: var(--f-tinta);
+    font: inherit;
+    padding: 0 8px;
+  }
+  .monto-input {
+    flex: 1;
+    min-height: 40px;
+    font-size: 18px;
+    text-align: right;
+    border-bottom: 1px solid var(--f-linea);
+  }
+  .acciones {
+    justify-content: space-between;
+  }
+}
+
+.enlace {
+  border: 0;
+  background: transparent;
+  color: var(--f-verde);
+  font: inherit;
+  font-size: 14px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px;
+  &.peligro {
+    color: var(--f-rojo);
+  }
+  &.fuerte {
+    font-weight: 600;
+  }
+}
+
+.agregar {
+  height: 46px;
+  border-radius: 12px;
+  border: 1.5px dashed var(--f-suave);
+  background: transparent;
+  color: var(--f-verde);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.error {
+  color: var(--f-rojo-texto);
+  background: var(--f-rojo-suave);
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.pie {
+  background: var(--f-oscuro);
+  color: #fff;
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom, 0px));
+  border-radius: 22px 22px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  .resumen {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .gris {
+    font-size: 13px;
+    color: #b9c7bd;
+  }
+  .estado {
+    font-size: 12px;
+    color: #8fd3ae;
+    &.malo {
+      color: #f2b79b;
+    }
+  }
+  .total {
+    font-size: 28px;
+    font-weight: 600;
+    color: #8fd3ae;
+    &.malo {
+      color: #f2b79b;
+    }
+  }
+  .guardar {
+    height: 50px;
+    border-radius: 14px;
+    border: 0;
+    background: #8fd3ae;
+    color: #0f2a1c;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    &:disabled {
+      opacity: 0.4;
+    }
+  }
+}
